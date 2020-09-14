@@ -20,6 +20,19 @@ We'll be explicitly looking at coding style, code organization, API design, and 
 * Exposing the service as gRPC in addition to HTTP
 * Other extensions to the service you think would be worthwhile.  If you do so, please include a brief description of the feature and justification for its inclusion.  Think of this as what you would have said during the design meeting to convince your team the effort was necessary.
 
+## Getting started
+
+After cloning the repo, there are a couple of initial steps;
+
+1. Install the generate dependencies with `make install`.
+   This will install `protoc-gen-go`, `protoc-gen-grpc-gateway`, `protoc-gen-openapiv2` and `statik` which
+   are necessary for us to generate the Go, swagger and static files.
+1. Finally, generate the files with `make generate`.
+   If you encounter an error here, make sure you've installed
+   `protoc` and it is accessible in your `$PATH`, and make sure
+   you've performed step 1.
+
+Now you can run the web server with `go run main.go`.
 
 ## Running
 Running `main.go` starts a web server on https://0.0.0.0:11000/. You can configure
