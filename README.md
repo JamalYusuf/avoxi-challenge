@@ -100,3 +100,18 @@ Please install it according to the
 [installation instructions](https://github.com/google/protobuf#protocol-compiler-installation)
 for your specific platform.
 
+
+
+## TODO - if I had more time
+- Unit Tests
+- Prevent Reflection of GRPC via ENV flag, to ensure producation isn't exposing information it shouldn't.
+- Load certs from ENV
+- Clean up k8s deployment
+- Logging - could have improved a lot, structured logging, better logging package, dependency injection 
+- Error Handling - not really using errors in a nice way 
+- Http Handlers Improvements - add security, logging, rate limiting 
+- Clean up root folder of project to include less files 
+- handle build artifacts from swagger/protobuff better 
+- Provide some client examples under cmd/api package 
+- Add onto the openAPI documentation & comment code better
+- Some refactoring of logic internally, especially dependency management 
