@@ -4,7 +4,6 @@ import (
 	"net"
 
 	"github.com/jamalyusuf/avoxi-challenge/pkg/countrycodes"
-	pbService "github.com/jamalyusuf/avoxi-challenge/proto"
 	"github.com/jpillora/ipfilter"
 )
 
@@ -18,14 +17,13 @@ func isValidIP(address string) bool {
 }
 
 // isValidCountries checks if passed in countries are valid countryCodes
-func isValidCountries(countries []*pbService.Country) bool {
+func isValidCountries(countries []string) bool {
 	// ensure all countries sent are valid aplha-2 country codes
 	for _, country := range countries {
-		if _, ok := countrycodes.GetByAlpha2(country.GetCountry()); !ok {
+		if _, ok := countrycodes.GetByAlpha2(country); !ok {
 			return false
 		}
 	}
-
 	return true
 }
 

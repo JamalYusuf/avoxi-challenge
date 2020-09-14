@@ -62,12 +62,9 @@ service IPFilterService{
   }
 }
 
-message Country{
-  string country = 1;
-}
 message GeoIPCheckRequest {
   string IP = 1;
-  repeated Country AllowedCountries = 2;
+  repeated string AllowedCountries = 2;
 
 }
 message GeoIPResponse {

@@ -49,7 +49,7 @@ go install github.com/fullstorydev/grpcurl/cmd/grpcurl
 ## **Method GeoIPCheck**
 ### payload
 ```
-$ grpcurl -insecure -d '{"IP": "95.31.18.119", "AllowedCountries": [ {"country": "RU"}]}' localhost:10000 v1.IPFilterService.GeoIPCheck
+$ grpcurl -insecure -d '{"IP": "95.31.18.119", "AllowedCountries": [ "RU", "US"] }' localhost:10000 v1.IPFilterService.GeoIPCheck
 ```
 
 ### request 

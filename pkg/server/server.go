@@ -45,13 +45,10 @@ func (b Backend) GeoIPCheck(_ context.Context, req *pbService.GeoIPCheckRequest)
 	}
 
 	// covert  to []string
-	var countries []string
-	for _, country := range req.GetAllowedCountries() {
-		countries = append(countries, country.GetCountry())
-	}
+	countries := req.GetAllowedCountries()
 
 	// validate that all countries are aplha-2 country codes
-	if ok := isValidCountries(req.GetAllowedCountries()); !ok {
+	if ok := isValidCountries(countries); !ok {
 		response.Result = false
 		response.Status = invalidCountryCode.Error()
 		b.Errorlog.Printf("GeoIPCheck %s countries: %s", invalidCountryCode, countries)
@@ -60,6 +57,7 @@ func (b Backend) GeoIPCheck(_ context.Context, req *pbService.GeoIPCheckRequest)
 
 	b.Filter = ipfilter.New(ipfilter.Options{
 		AllowedCountries: countries,
+		BlockByDefault: true,
 	})
 
 	response.Result = b.Filter.Allowed(req.GetIP())
