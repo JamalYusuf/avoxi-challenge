@@ -73,7 +73,7 @@ $ grpcurl -insecure localhost:10000 describe v1.IPLocationRequest
 
 ### payload
 ```
-$ grpcurl -insecure -d '{"IP": "95.31.18.119"}' localhost:10000 v1.IPFilterService.Health
+$ grpcurl -insecure -d '{}' localhost:10000 v1.IPFilterService.Health
 ```
 
 ### request 
