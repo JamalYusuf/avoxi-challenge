@@ -1,0 +1,91 @@
+syntax="proto3";
+
+package v1;
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+// Defines the import path that should be used to import the generated package,
+// and the package name.
+option go_package = "github.com/jamalyusuf/avoxi-challenge/proto;v1";
+
+// These annotations are used when generating the OpenAPI file.
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    version: "1.0";
+  };
+  external_docs: {
+    url: "https://github.com/jamalyusuf/avoxi-challenge";
+    description: "gRPC-gateway and HTTP-based API that receives an IP address and a white list of countries. Then API returns an indicator if the IP address is within the blacklisted listed countries.";
+  }
+  schemes: HTTPS;
+};
+
+service IPFilterService{
+  rpc GeoIPCheck(GeoIPCheckRequest) returns (GeoIPResponse){
+  option (google.api.http) = {
+  // Route to this method from POST requests to /api/v1/GEoIPCheck
+      post: "/api/v1/GeoIPCheck"
+      body: "*"
+      };
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+        summary: "Verify an IP is within a whitelist of countries."
+        description: "Checks an IP to ensure it's within a specific whitelist of countries. Country codes are in ISO3166-1, Alpha-2 format."
+        tags: "GeoIPCheck"
+      };
+  }
+
+  rpc IPLocation(IPLocationRequest) returns (IPLocationResponse){
+    option (google.api.http) = {
+      // Route to this method from POST requests to /api/v1/IPLocation
+      post: "/api/v1/IPLocation"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+    summary: "Get the country of origin of an IP."
+    description: "Get the country of origin for a IP address."
+    tags: "IPLocation"
+  };
+}
+
+  rpc Health(HealthRequest) returns (HealthResponse){
+    option (google.api.http) = {
+      // Route to this method from POST requests to /api/v1/GEoIPCheck
+      post: "/api/v1/Health"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Get health information about current running server."
+      description: "Get the health information about the server, such as startTime, UpTime."
+      tags: "Health"
+    };
+  }
+}
+
+message Country{
+  string country = 1;
+}
+message GeoIPCheckRequest {
+  string IP = 1;
+  repeated Country AllowedCountries = 2;
+
+}
+message GeoIPResponse {
+  bool result = 1;
+  string status = 2;
+}
+
+message IPLocationRequest {
+  string IP = 1;
+}
+message IPLocationResponse {
+  string IP = 1;
+  string Location = 2;
+}
+
+message HealthRequest {}
+
+message HealthResponse {
+  string status = 1;
+}
+
